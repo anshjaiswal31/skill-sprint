@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Multiselect } from 'multiselect-react-dropdown'
-const selectedskills=[]
+import "./CSS/JobDetails.css"
+import { useDispatch } from 'react-redux';
+import { logout } from '../features/userSlice';
 
+const selectedskills = []
+const selectedLocs = []
 export const JobDetails = () => {
     const history = useNavigate()
     const schema = yup.object().shape({
@@ -19,18 +23,38 @@ export const JobDetails = () => {
         location: yup.string()
     });
 
+
+    const [locationList, setLocationList] = useState([]);
+
+    useEffect(() => {
+        calllocapi()
+    }, [])
+
+    const calllocapi = async () => {
+        const res = await axios("http://localhost:3000/getlocations", {
+            method: "GET",
+        })
+        setLocationList(res.data.data)
+        console.log("avc", res.data)
+        console.log("checkeee", locationList)
+    }
+
+
+
     let skills = [
         { Skill: 'Java' },
         { Skill: 'C++' },
         { Skill: 'Javascript' },
         { Skill: 'DBMS' },
-        { Skill: 'HTML'},
-        { Skill: 'Css'},
-        { Skill: 'Python'},
+        { Skill: 'HTML' },
+        { Skill: 'Css' },
+        { Skill: 'Python' },
         { Skill: 'C#' },
-        { Skill: 'OOPS'},
+        { Skill: 'OOPS' },
     ];
     const [options] = useState(skills);
+
+    // const [locations] = useState(locationList);
 
     const [formData, setformData] = useState({
         jobType: "",
@@ -66,14 +90,13 @@ export const JobDetails = () => {
     const { register, handleSubmit } = useForm({ resolver: yupResolver(schema), });
 
     async function onSubmit(data) {
-        // console.log(data);
         data["formQuestions"] = questionList
-        // console.log("hello",skilllList)
 
-        data["requiredSkillset"]=selectedskills
-        console.log(data);
+        data["requiredSkillset"] = selectedskills
+
+        data["location"] = selectedLocs
         try {
-            await axios.post("http://localhost:3000/jobdetails", {data})
+            await axios.post("http://localhost:3000/jobdetails", { data })
                 .then(res => {
                     if (res.data === "checked") {
                         history("/", { state: { id: data.title } })
@@ -88,56 +111,91 @@ export const JobDetails = () => {
             console.log("Error", e);
         }
     }
-    
-    const onSelect=(selectedList, selectedItem)=>
-    {
-        selectedskills.push(selectedItem)
-        // console.log(selectedskills)
+    const dispatch = useDispatch();
+    const handleLogout = (e) => {
+        e.preventDefault();
+        dispatch(logout());
+        try {
+            history("/login")
+        }
+        catch (e) {
+            console.log("Error", e);
+        }
     }
+
+    // function onLogout() {
+
+    //     try {
+    //         history("/login")
+    //     }
+    //     catch (e) {
+    //         console.log("Error", e);
+    //     }
+    // }
+
+    const onSelect = (selectedList, selectedItem) => {
+        selectedskills.push(selectedItem)
+    }
+    const onSelectLoc = (selectedList, selectedItem) => {
+        selectedLocs.push(selectedItem)
+
+    }
+
     return (
 
-        <div>
-            <h3>Job Details</h3>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <h4>Requried Skillset : </h4>
+        <div className='JobDetails'>
+
+            <form className='form' onSubmit={handleSubmit(onSubmit)}>
+                <h3>Fill in the job details</h3>
+                <span className='heading'>Requried Skillsets</span>
                 <div>
-                    {/* {...register("requiredSkillset")}> */}
-                    <div className='SkillsDropDown'>
-                        <Multiselect options={options} displayValue='Skill' onSelect={onSelect} />
+                    <div className='DropDown'>
+                        <Multiselect className='input' options={options} displayValue='Skill' onSelect={onSelect} />
                     </div>
                 </div>
-                {/* <input type='text' placeholder='Required Skillset' {...register("requiredSkillset")} /> */}
-                <h4>Due Date : </h4>
-                <input type='date' placeholder='Due Date' {...register("dueDate")} />
-                <h4>Description : </h4>
-                <textarea placeholder='Description' {...register("description")} />
-                <h4>Title : </h4>
-                <input type='text' placeholder='Job Title' {...register("title")} />
-                <h4>CTC (in Lakhs): </h4>
-                <input type='number' placeholder='CTC in Lakhs' {...register("ctcLakhs")} />
-                <h4>Job Type : </h4>
-
-                <input type='radio' name='jobType' value='onsite' {...register("jobType")}
+                <br />
+                <span className='heading'>Due Date : </span>
+                <input className='input' type='date' placeholder='Due Date' {...register("dueDate")} />
+                <br />
+                <br />
+                <span className='heading'>Description : </span>
+                <textarea className='textArea' placeholder='Description' {...register("description")} />
+                <br />
+                <br />
+                <span className='heading'>Title : </span>
+                <input className='input' type='text' placeholder='Job Title' {...register("title")} />
+                <br />
+                <br />
+                <span className='heading'>CTC (in Lakhs): </span>
+                <input className='input' type='number' placeholder='CTC in Lakhs' {...register("ctcLakhs")} />
+                <br />
+                <br />
+                <span className='heading'>Job Type : </span>
+                <input className='input' type='radio' name='jobType' value='onsite' {...register("jobType")}
                     onChange={handleChange}
-                // checked={formData.JobType=='onsite'}
                 />
-                <label>Onsite : </label>
+                <label> Onsite  </label>
 
-                <input type='radio' name='jobType' value='remote' {...register("jobType")}
+                <input className='input' type='radio' name='jobType' value='remote' {...register("jobType")}
                     onChange={handleChange}
-                // checked={formData.JobType=='remote'}
                 />
-                <label>Remote : </label>
+                <label> Remote  </label>
 
+                <br />
+                <br />
+                <span className='heading'>Location(s) : </span>
 
-                <h4>Location : </h4>
-                <input type='text' placeholder='Location' {...register("location")} />
+                <div>
+                    <div className='DropDown'>
+                        <Multiselect className='input' options={locationList} displayValue='location' onSelect={onSelectLoc} />
+                    </div>
+                </div>
 
-                <h4 htmlFor='question'>Question(s)</h4>
+                <span className='heading' htmlFor='question'>Question(s)</span>
                 {questionList.map((singleQuestion, index) => (
                     <div key={index} className='questions'>
                         <div className='add-question'>
-                            <input name='question' type='text' id='question' required
+                            <input className='input' name='question' type='text' id='question' required
                                 value={singleQuestion.question}
                                 onChange={(e) => handleQuestionChange(e, index)}
                             />
@@ -160,11 +218,16 @@ export const JobDetails = () => {
                         </div>
                     </div>
                 ))}
-
-                <button className="btn btn-default" type="submit">
+                <br />
+                <button className="submitbutton" type="submit">
                     Submit
                 </button>
+
             </form>
+            <button className="logoutbutton" type="button" onClick={(e) => handleLogout(e)}>
+                Logout
+            </button>
+              
         </div>
     )
 }

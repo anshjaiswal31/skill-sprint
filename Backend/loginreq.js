@@ -1,33 +1,50 @@
-const express=require("express")
-const collection=require("../models/userSchema")
-const app=express.Router()
-const bcrypt=require('bcryptjs')
-// const jwt=require("jsonwebtoken")
+const express = require("express")
+const collection = require("../models/userSchema")
+const adminCollection=require("../models/AdminSchema")
+const app = express.Router()
+const bcrypt = require('bcryptjs')
 
-app.post("/",async(req,res)=>{
-    let{email,password}=req.body;
-    
-    try{
-        const check=await collection.findOne({email:email})
-        // const token=jwt.sign({email:email},process.env.REACT_APP_SECRET_KEY,{expiresIn:'2h'})
-        // jwt.verify(token,process.env.REACT_APP_SECRET_KEY)
-        if(check){
-            console.log(bcrypt.compareSync(password,check.password));
-            if(bcrypt.compareSync(password,check.password))
+app.post("/", async (req, res) => {
+    let { email, password, adminCheck } = req.body;
+
+    try {
+        if (adminCheck==false) 
+        {
+            const check = await collection.findOne({ email: email })
+            if (check) 
             {
-                res.json("exist")
+                console.log("user",bcrypt.compareSync(password, check.password));
+                if (bcrypt.compareSync(password, check.password)) {
+                    res.json("exist")
+                }
+                else { res.json("incorrect") }
+
             }
-            else{res.json("incorrect")}
+            else {
+                res.json("notexist")
+            }
+        }
+        else
+        {
             
+            const check=await adminCollection.findOne({email:email})
+            console.log("admin",bcrypt.compareSync(password, check.password));
+            if(check){
+                if (bcrypt.compareSync(password, check.password)) {
+                    res.json("existadmin")
+                }
+                else { res.json("incorrect") }
+            }
+            else {
+                res.json("notexist")
+            }
         }
-        else{
-            res.json("notexist")
-        }
+        
     }
-    catch(e){
+    catch (e) {
         console.log(e)
         res.json("notexist")
     }
 })
 
-module.exports=app
+module.exports = app

@@ -1,0 +1,28 @@
+.table-heading{
+    border:#F6F1F1;
+    border-style:solid;
+}
+.table-content{
+    border:#F6F1F1;
+    border-style:solid;
+    text-align:center;
+}
+.title{
+    border:#F6F1F1;
+    border-style:solid;
+}
+.submitbutton{
+    
+    border: none;
+    outline: none;
+    background: #F6F1F1;
+    color: #146C94;
+    padding-left: 5px;
+    padding: 1%;
+    border-radius:40px;
+    text-align: center;
+    box-shadow: 0 6px 20px -5px #19A7CE;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}

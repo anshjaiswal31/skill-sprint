@@ -1,0 +1,70 @@
+.form {
+    margin: auto;
+    
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+
+.login {
+    width: fit-content;
+    margin: auto;
+    background-color: #AFD3E2;
+    padding-left: 50px;
+    padding-top: 50px;
+    padding-right: 50px;
+    padding-bottom: 1px;
+    box-shadow: 0px 0px 5px #19A7CE;
+}
+
+.input {
+    margin: auto;
+    padding: 5px;
+    background-color: #F6F1F1;
+}
+
+.texts {
+    margin: auto;
+    padding: 10px;
+    font-size: small;
+    color: black;
+
+}
+
+.check-box {
+    width: 10px;
+    height: 10px;
+}
+
+.submitbutton {
+    width: 60px;
+    height: 20px;
+    border: none;
+    outline: none;
+    background: #146C94;
+    color: #F6F1F1;
+    border-radius: 40px;
+    text-align: center;
+    box-shadow: 0 6px 20px -5px #19A7CE;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.link {
+    font-size: small;
+    text-align: center;
+
+}
+
+.heading1 {
+    font-size: larger;
+}
+
+.ending {
+
+    font-size: x-small;
+    opacity: 50%;
+}

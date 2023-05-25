@@ -31,7 +31,7 @@ const jobSchema = new mongoose.Schema({
         enum: ['remote', 'onsite']
     },
     location: {
-        type: String,
+        type: Array,
         required: true
     },
     formQuestions: [questionSchema]
