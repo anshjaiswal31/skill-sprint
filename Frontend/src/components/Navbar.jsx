@@ -4,10 +4,9 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../features/userSlice';
 import { useDispatch } from 'react-redux';
 import { logout } from '../features/userSlice';
-const Navbar = () => 
-{
+const Navbar = () => {
     const history = useNavigate()
-    const user=useSelector(selectUser);
+    const user = useSelector(selectUser);
     const dispatch = useDispatch();
     const handleLogout = (e) => {
         e.preventDefault();
@@ -29,27 +28,25 @@ const Navbar = () =>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                                <a className="nav-link active" aria-current="page"  href="#">Profile</a>
-                        </li>
                             <li className="nav-item">
-                                {/* <a className="nav-link active" aria-current="page" href="/loggedinuser">Job Openings</a> */}
-                                <Link className="nav-link active" to="/loggedinuser">SOME</Link>
-                                {/* <Link to="/loggedinuser">SOME</Link> */}
+                                <a className="nav-link active" aria-current="page" href="#">Profile</a>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link active" to="/jobs">Job openings</Link>
                             </li>
 
-                            
-                            {user && user.userType=="admin"?<li className="nav-item"><a className="nav-link active">Add Job</a></li>:null}
-                            
-                        </ul>    
+
+                            {user && user.userType === "admin" ? <li className="nav-item"><Link className="nav-link active" to="/jobdetails">Add Job</Link></li> : null}
+
+                        </ul>
                         <ul className="navbar-nav pull-right">
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Settings
+                                    {user.email} Settings
                                 </a>
                                 <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href="#">Edit Profile</a></li>
-                                    <li><a className="dropdown-item" href="#">Dashboard</a></li>
+                                    <li><Link className="dropdown-item" to="/edit">Edit Profile</Link></li>
+                                    {user && user.userType === "admin" ? <li><Link className="dropdown-item" to="/jobsdashboard">Dashboard</Link></li> : null}
                                     <li><hr className="dropdown-divider" /></li>
                                     <li><a className="dropdown-item" type="button" onClick={(e) => handleLogout(e)}>Logout</a></li>
                                 </ul>

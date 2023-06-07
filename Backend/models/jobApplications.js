@@ -3,9 +3,9 @@ const answerSchema = new mongoose.Schema({
     answer: {
         type:String
     },
-    qid:{
-        type:String
-    }
+    // qid:{
+    //     type:String
+    // }
 })
 
 const jobApplicationSchema=new mongoose.Schema({
@@ -13,15 +13,22 @@ const jobApplicationSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    userId:{
+    userEmail:{
         type:String,
+        // required:true
+    },
+    
+    answers:{
+        type:Array,
         required:true
     },
     
-    answers:[answerSchema],
+    
+    // [answerSchema],
 
     status:{
         type:String,
+        default:'pending',
         enum:['accepted','rejected','pending']
     }
 })

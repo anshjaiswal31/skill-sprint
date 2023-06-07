@@ -14,7 +14,6 @@ const selectedLocs = []
 export const JobDetails = () => {
     const history = useNavigate()
     const schema = yup.object().shape({
-        // requiredSkillset: yup.string().required(),
         dueDate: yup.date().required(),
         description: yup.string().required(),
         title: yup.string().required(),
@@ -24,21 +23,21 @@ export const JobDetails = () => {
     });
 
 
-    const [locationList, setLocationList] = useState([]);
-
-    useEffect(() => {
-        calllocapi()
-    }, [])
+    
 
     const calllocapi = async () => {
-        const res = await axios("http://localhost:3000/getlocations", {
+        const res = await axios(process.env.REACT_APP_BACKENDURL+"getlocations", {
             method: "GET",
         })
         setLocationList(res.data.data)
         console.log("avc", res.data)
         console.log("checkeee", locationList)
     }
+    const [locationList, setLocationList] = useState([]);
 
+    useEffect(() => {
+        calllocapi()
+    }, [])
 
 
     let skills = [
@@ -54,14 +53,10 @@ export const JobDetails = () => {
     ];
     const [options] = useState(skills);
 
-    // const [locations] = useState(locationList);
-
     const [formData, setformData] = useState({
         jobType: "",
     })
     const [questionList, setQuestionList] = useState([{ question: "" }]);
-    // console.log(questionList);
-    // console.log(formData);
     const handleQuestionAdd = () => {
         setQuestionList([...questionList, { question: "" }])
     }
@@ -96,7 +91,7 @@ export const JobDetails = () => {
 
         data["location"] = selectedLocs
         try {
-            await axios.post("http://localhost:3000/jobdetails", { data })
+            await axios.post(process.env.REACT_APP_BACKENDURL+"jobdetails", { data })
                 .then(res => {
                     if (res.data === "checked") {
                         history("/", { state: { id: data.title } })
@@ -122,16 +117,6 @@ export const JobDetails = () => {
             console.log("Error", e);
         }
     }
-
-    // function onLogout() {
-
-    //     try {
-    //         history("/login")
-    //     }
-    //     catch (e) {
-    //         console.log("Error", e);
-    //     }
-    // }
 
     const onSelect = (selectedList, selectedItem) => {
         selectedskills.push(selectedItem)

@@ -15,13 +15,13 @@ app.post("/", async (req, res) => {
             {
                 console.log("user",bcrypt.compareSync(password, check.password));
                 if (bcrypt.compareSync(password, check.password)) {
-                    res.json("exist")
+                    res.json("user")
                 }
-                else { res.json("incorrect") }
+                else { res.json("Wrong password :')") }
 
             }
             else {
-                res.json("notexist")
+                res.json("User is not registered")
             }
         }
         else
@@ -31,19 +31,19 @@ app.post("/", async (req, res) => {
             console.log("admin",bcrypt.compareSync(password, check.password));
             if(check){
                 if (bcrypt.compareSync(password, check.password)) {
-                    res.json("existadmin")
+                    res.json("admin")
                 }
-                else { res.json("incorrect") }
+                else { res.json("Wrong password :')") }
             }
             else {
-                res.json("notexist")
+                res.json("User is not registered")
             }
         }
         
     }
     catch (e) {
         console.log(e)
-        res.json("notexist")
+        res.json("ERROR "+e)
     }
 })
 

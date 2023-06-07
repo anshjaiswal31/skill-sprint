@@ -21,16 +21,16 @@ app.post("/", async (req, res) => {
     const re_phone = /^[6-9]{1}[0-9]{9}$/;
     const re_pw = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (name.length < 1) {
-        res.json("invalidname")
+        res.json("Enter your name please")
     }
     else if (!validator.isEmail(email)) {
-        res.json("invalidemail")
+        res.json("Enter a valid email address")
     }
     else if (!re_pw.test(password)) {
-        res.json("invalidpw")
+        res.json("The password must contain atleast 8 characters including 1 letter and 1 number")
     }
     else if (!re_phone.test(phoneNo)) {
-        res.json("invalidnumber")
+        res.json("Enter a valid phone number.")
     }
     else {
         try {
@@ -38,34 +38,29 @@ app.post("/", async (req, res) => {
                 const check = await collection.findOne({ email: email })
 
                 if (check) {
-                    res.json("exist")
+                    res.json("User already registered")
                 }
                 else {
-                    console.log("checkkkkk", data)
                     await collection.insertMany([data])
-                    // const token=jwt.sign({email:email},process.env.REACT_APP_SECRET_KEY,{expiresIn:'2h'})
-                    // console.log(token);
-                    console.log("checkkkkk 2")
-                    res.json('notexist');
+                    res.json('user');
                 }
             }
             else {
                 const check = await admincollection.findOne({ email: email })
 
                 if (check) {
-                    res.json("exist")
+                    res.json("User already registered")
                 }
                 else {
                     await admincollection.insertMany([data])
-                    console.log("checker admin", data)
-                    res.json('notexistadmin');
+                    res.json('admin');
                 }
             }
         }
         catch (e) {
             console.log(e)
 
-            res.json("error")
+            res.json("unknown error")
         }
     }
 })

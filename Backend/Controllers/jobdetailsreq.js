@@ -14,9 +14,6 @@ app.post("/", async (req, res) => {
         console.log(e)
 
         res.json("error")
-    }
-
-
-    
+    } 
 })
 module.exports = app

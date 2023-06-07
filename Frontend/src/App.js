@@ -1,15 +1,17 @@
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
-import Home from './pages/Home';
+import './App.css';
 import Signup from './pages/Signup';
 import Login from './pages/Login'
 import Profile from './pages/Profile';
 import JobDetails from './pages/JobDetails';
- import './App.css';
 import Jobs from './pages/Jobs';
-import { useSelector } from 'react-redux';
-import { selectUser } from './features/userSlice';
+import {useSelector} from 'react-redux';
+import {selectUser} from './features/userSlice';
 import Navbar from './components/Navbar';
-function App() {
+import EditProfile from './pages/EditProfile';
+import JobsDashboard from './pages/JobsDashboard';
+import AllApplications from './pages/AllApplications';
+function App(){
   const user=useSelector(selectUser);
 
   return (
@@ -19,15 +21,15 @@ function App() {
       {/* <Navbar/> */}
       {user?<Navbar/>:null}
         <Routes>
-
-          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={<Login/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/signup' element={<Signup/>}/>
           <Route path='/profile' element={<Profile/>}/>
+          {user?<Route path='/edit' element={<EditProfile/>}/>:null}
           {user && user.userType==="admin"?<Route path='/jobdetails' element={<JobDetails/>}/>:null}
-          {/* <Route path='/jobdetails' element={<JobDetails/>}/> */}
           {user?<Route path='/jobs' element={<Jobs/>}/>:null}
-          {/* <Route path='/loggedinuser' element={<LoggedInUser/>}/> */}
+          {user && user.userType==="admin"?<Route path='/jobsdashboard' element={<JobsDashboard/>}/>:null}
+          <Route path='/allapplications/:jobid' element={<AllApplications/>}/>
         </Routes>
       </Router>
     </div>
