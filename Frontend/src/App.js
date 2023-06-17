@@ -11,7 +11,8 @@ import Navbar from './components/Navbar';
 import EditProfile from './pages/EditProfile';
 import JobsDashboard from './pages/JobsDashboard';
 import AllApplications from './pages/AllApplications';
-function App(){
+function App()
+{
   const user=useSelector(selectUser);
   return (
     <div className="App">

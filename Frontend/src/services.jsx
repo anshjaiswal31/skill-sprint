@@ -10,7 +10,7 @@ export const PasswordChangeService = async (data) => {
     const { currentPassword, password, confirmPassword, email, adminCheck } = data;
     try {
         if (currentPassword === password)
-            alert("Your new password can't be same as old password")
+            alert ("Your new password can't be same as old password")
         else if (password !== confirmPassword)
             alert("The new passwords don't match")
         else {
@@ -32,23 +32,25 @@ export const PasswordChangeService = async (data) => {
 
 
 export const UpdateDataService = async (data) => {
-    let history = useNavigate()
+    // let history = useNavigate()
     const { name, email, phoneNo, adminCheck } = data
     try {
         await axios.post(process.env.REACT_APP_BACKENDURL + "edit", { name, email, phoneNo, adminCheck })
             .then(res => {
 
                 if (res.data === "Updated")
-                    history("/profile", { state: { id: email } });
-                alert(res.data);
+                    // history("/profile", { state: { id: email } });
+                return (res.data)
             })
             .catch(e => {
-                alert("Wrong Details", e)
                 console.log("errrr", e)
+                return ("Wrong Details", e)
+                
             })
     }
     catch (e) {
         console.log("Error", e);
+        return ("Error", e)
     }
 };
 

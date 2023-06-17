@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import "./QuestionsPopUp.css"
+import "./CSS/PopUp.css"
 import axios from 'axios';
 import { selectUser } from '../features/userSlice';
 import { useSelector } from 'react-redux'
@@ -14,7 +14,7 @@ export const QuestionsPopUp = (props) => {
     e.preventDefault();
     console.log("id here",jobid)
     try {
-      await axios.post("http://localhost:3000/jobs", { answers,jobid,userEmail })
+      await axios.post(process.env.REACT_APP_BACKENDURL + "jobs", { answers,jobid,userEmail })
         .then(res => {
           switch (res.data) {
             case "success":
@@ -51,7 +51,7 @@ export const QuestionsPopUp = (props) => {
       <div className='popup-inner'>
         {props.children}
         <button onClick={() => props.setTrigger(false)} className="close-btn">x</button>
-        {console.log("datraa", props.data)}
+        {/* {console.log("datraa", props.data)} */}
         {props.data[0].map((i, index) => {
           
           return (

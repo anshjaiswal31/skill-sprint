@@ -10,7 +10,7 @@ const answerSchema = new mongoose.Schema({
 
 const jobApplicationSchema=new mongoose.Schema({
     jobId:{
-        type:String,
+        type:mongoose.ObjectId,
         required:true
     },
     userEmail:{

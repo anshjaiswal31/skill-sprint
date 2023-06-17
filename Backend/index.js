@@ -1,8 +1,8 @@
 const express=require("express")
 const cors=require("cors")
 const app=express()
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true, limit: "100mb" }));
+app.use(express.json({ limit: "100mb" }));
 app.use(cors())
 const mongoose=require('mongoose')
 
@@ -15,6 +15,10 @@ const jobDataRoute=require('./Controllers/jobdata')
 const editProfileRoute=require('./Controllers/editprofilereq')
 const changePasswordRoute=require('./Controllers/changepasswordreq')
 const jobApplicationsRoute=require("./Controllers/jobappsdata")
+const questionsRoute=require("./Controllers/getquestions")
+const reviewRoute=require("./Controllers/reviewapp")
+const profileUploadRoute=require("./Controllers/profileuploader")
+// const appStatusRoute=require("./Controllers/applicationstatusreq")
 
 mongoose.connect("mongodb://0.0.0.0:27017/job-portal-app")
 .then(()=>{
@@ -45,5 +49,13 @@ app.use("/edit",editProfileRoute)
 app.use("/changepw",changePasswordRoute)
 
 app.use("/getjobapps",jobApplicationsRoute)
+
+app.use("/questions", questionsRoute)
+
+app.use("/review", reviewRoute)
+
+app.use("/uploadImage", profileUploadRoute)
+
+// app.use("/getStatus",appStatusRoute)
 
 app.listen(3000,()=>{console.log("port connected");})

@@ -3,15 +3,15 @@ import "./CSS/Jobs.css"
 import { QuestionsPopUp } from '../components/QuestionsPopUp'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../features/userSlice'
+// import axios from 'axios'
+const Jobs = () => {
 
-const Jobs = () => 
-{
-  
   const [buttonPopup, setButtonPopup] = useState(false);
   const [jobData, setJobData] = useState([])
-  const [questions,setQuestions]=useState([])
-  const [jobid,setJobid]=useState("")
-  const user=useSelector(selectUser);
+  const [questions, setQuestions] = useState([])
+  const [jobid, setJobid] = useState("")
+  // const [status, setStatus] = useState("")
+  const user = useSelector(selectUser);
   function locations(locationss) {
     let locs = ""
     locationss.forEach((l1) => {
@@ -20,15 +20,24 @@ const Jobs = () =>
     return locs.substring(0, locs.length - 2)
   }
   useEffect(() => {
-    fetch(process.env.REACT_APP_BACKENDURL+"getjobdata", {
+    fetch(process.env.REACT_APP_BACKENDURL + "getjobdata?email=" + user.email, {
       method: "GET",
     })
       .then((res) => res.json())
       .then((data) => {
         setJobData(data.data)
-        console.log(data, "jobData")
+        console.log(data.data, "jobData")
       })
   }, [])
+
+  // async function checkStatus(id, email) {
+
+  //   await axios.get(process.env.REACT_APP_BACKENDURL + "getStatus", { params: { id: id, email: email } })
+  //     .then(res => {
+  //       setStatus(res.data.data.status)
+  //       return (res.data.data.status)
+  //     })
+  // }
 
   function reverseString(str) {
     return str.split('-').reverse().join('-');
@@ -39,11 +48,12 @@ const Jobs = () =>
         <tr>
           <th className="table-heading" style={{ width: 250 }}>Title</th>
           <th className="table-heading">Description</th>
-          <th className="table-heading" style={{ width: 135 }}>Due-date<br/>(DD-MM-YYYY)</th>
+          <th className="table-heading" style={{ width: 135 }}>Due-date<br />(DD-MM-YYYY)</th>
           <th className="table-heading" style={{ width: 100 }}>Estimated CTC</th>
           <th className="table-heading" style={{ width: 300, textAlign: 'center' }}>Location</th>
         </tr>
         {jobData.map(i => {
+
           return (
 
             <tr>
@@ -52,22 +62,21 @@ const Jobs = () =>
               <td className="table-content">{reverseString(i.dueDate.substring(0, 10))}</td>
               <td className="table-content">{i.ctcLakhs} LPA</td>
               <td className="table-content">{i.jobType !== 'remote' ? locations(i.location) : 'remote'}</td>
-              {user&& user.userType==="user"?<button onClick={
-                () => {
-                  setButtonPopup(true);
-                  setQuestions(i.formQuestions);
-                  setJobid(i._id);
-                  //here
-                }
-                
-
-              } className='submitbutton'>Apply now</button>:""}
+              {/* {setStatus(checkStatus(i._id, user.email))} */}
+              {user && user.userType === "user" ?
+                i.application.status == "pending" ? <button onClick={
+                  () => {
+                    setButtonPopup(true);
+                    setQuestions(i.formQuestions);
+                    setJobid(i._id);
+                  }
+                } className='submitbutton'>Apply now</button> : i.application.status : ""}
             </tr>
 
           )
         })}
       </table>
-      {buttonPopup && <QuestionsPopUp trigger={buttonPopup} setTrigger={setButtonPopup} data={[questions, jobid]}/>}
+      {buttonPopup && <QuestionsPopUp trigger={buttonPopup} setTrigger={setButtonPopup} data={[questions, jobid]} />}
     </div>
   )
 }
