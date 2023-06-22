@@ -9,7 +9,7 @@ const app = express.Router()
 
 app.post("/", async (req, res) => {
     let { email, image, adminCheck } = req.body
-    //a
+    
     const data = {
         image: image
     }

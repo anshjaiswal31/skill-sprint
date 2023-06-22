@@ -3,14 +3,15 @@ import "./CSS/Jobs.css"
 import { QuestionsPopUp } from '../components/QuestionsPopUp'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../features/userSlice'
-// import axios from 'axios'
+
 const Jobs = () => {
 
   const [buttonPopup, setButtonPopup] = useState(false);
   const [jobData, setJobData] = useState([])
   const [questions, setQuestions] = useState([])
+  const [order, setOrder] = useState("ASC")
   const [jobid, setJobid] = useState("")
-  // const [status, setStatus] = useState("")
+
   const user = useSelector(selectUser);
   function locations(locationss) {
     let locs = ""
@@ -30,14 +31,22 @@ const Jobs = () => {
       })
   }, [])
 
-  // async function checkStatus(id, email) {
-
-  //   await axios.get(process.env.REACT_APP_BACKENDURL + "getStatus", { params: { id: id, email: email } })
-  //     .then(res => {
-  //       setStatus(res.data.data.status)
-  //       return (res.data.data.status)
-  //     })
-  // }
+  const sorting = (col) => {
+    if(order === "ASC") {
+      const sorted = [...jobData].sort((a,b) =>
+        a[col]> b[col]?1:-1
+      );
+      setJobData(sorted);
+      setOrder("DSC");
+    }
+    else {
+      const sorted = [...jobData].sort((a,b) =>
+        a[col] < b[col]?1:-1
+      );
+      setJobData(sorted);
+      setOrder("ASC");
+    }
+  };
 
   function reverseString(str) {
     return str.split('-').reverse().join('-');
@@ -48,8 +57,8 @@ const Jobs = () => {
         <tr>
           <th className="table-heading" style={{ width: 250 }}>Title</th>
           <th className="table-heading">Description</th>
-          <th className="table-heading" style={{ width: 135 }}>Due-date<br />(DD-MM-YYYY)</th>
-          <th className="table-heading" style={{ width: 100 }}>Estimated CTC</th>
+          <th className="table-heading" onClick={()=>sorting("dueDate")} style={{ width: 135 }}>Due-date<br />(DD-MM-YYYY)</th>
+          <th className="table-heading" onClick={()=>sorting("ctcLakhs")} style={{ width: 100 }}>Estimated CTC</th>
           <th className="table-heading" style={{ width: 300, textAlign: 'center' }}>Location</th>
         </tr>
         {jobData.map(i => {

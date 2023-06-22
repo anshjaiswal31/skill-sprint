@@ -6,12 +6,13 @@ const bcrypt = require('bcryptjs')
 
 app.post("/", async (req, res) => {
     let { email, password, adminCheck } = req.body;
+    console.log(req.body)
 
     try {
         if (adminCheck==false) 
         {
             const check = await collection.findOne({ email: email })
-            if (check) 
+            if (check!=null) 
             {
                 console.log("user",bcrypt.compareSync(password, check.password));
                 if (bcrypt.compareSync(password, check.password)) {
@@ -28,8 +29,9 @@ app.post("/", async (req, res) => {
         {
             
             const check=await adminCollection.findOne({email:email})
-            console.log("admin",bcrypt.compareSync(password, check.password));
-            if(check){
+            console.log(check,"hellohere")
+            // console.log("admin",bcrypt.compareSync(password, check.password));
+            if(check!=null){
                 if (bcrypt.compareSync(password, check.password)) {
                     res.json("admin")
                 }
@@ -43,7 +45,7 @@ app.post("/", async (req, res) => {
     }
     catch (e) {
         console.log(e)
-        res.json("ERROR "+e)
+        res.json("ERROR aaya "+e)
     }
 })
 

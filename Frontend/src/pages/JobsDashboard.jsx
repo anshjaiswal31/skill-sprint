@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../features/userSlice'
 
 const JobsDashboard = () => {
 
 
     const [jobData, setJobData] = useState([])
+    const user = useSelector(selectUser);
     // const [jobid,setJobid]=useState("default")
     const history=useNavigate();
     useEffect(() => {
-        fetch(process.env.REACT_APP_BACKENDURL + "getjobdata", {
+        fetch(process.env.REACT_APP_BACKENDURL + "getjobdata?email=" + user.email, {
             method: "GET",
         })
             .then((res) => res.json())

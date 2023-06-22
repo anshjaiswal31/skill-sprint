@@ -1,4 +1,5 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
+import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/userSlice';
@@ -8,6 +9,26 @@ const Navbar = () => {
     const history = useNavigate()
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
+    const [email]= useState(user.email)
+    const [img,setImg]=useState("");
+    const [adminCheck] = useState(user.userType === 'admin' ? true : false)
+    useEffect(() => {
+        
+        try {
+            axios.get(process.env.REACT_APP_BACKENDURL + "getProfile",  {
+                params: {
+                  email:email,
+                  adminCheck:adminCheck
+                }
+              })
+                .then(function (response) {
+                  setImg( response.data.data.image)
+                })
+        }
+        catch (e) {
+            console.log("Error", e);
+        }
+    },[])
     const handleLogout = (e) => {
         e.preventDefault();
         dispatch(logout());
@@ -40,9 +61,10 @@ const Navbar = () => {
 
                         </ul>
                         <ul className="navbar-nav pull-right">
+                        <img src={img} width={40} height={40} alt={user.email} />
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {user.email} Settings
+                                    Settings
                                 </a>
                                 <ul className="dropdown-menu">
                                     <li><Link className="dropdown-item" to="/edit">Edit Profile</Link></li>

@@ -18,6 +18,7 @@ const jobApplicationsRoute=require("./Controllers/jobappsdata")
 const questionsRoute=require("./Controllers/getquestions")
 const reviewRoute=require("./Controllers/reviewapp")
 const profileUploadRoute=require("./Controllers/profileuploader")
+const profileImageRoute=require("./Controllers/getProfileImage")
 // const appStatusRoute=require("./Controllers/applicationstatusreq")
 
 mongoose.connect("mongodb://0.0.0.0:27017/job-portal-app")
@@ -56,6 +57,6 @@ app.use("/review", reviewRoute)
 
 app.use("/uploadImage", profileUploadRoute)
 
-// app.use("/getStatus",appStatusRoute)
+app.use("/getProfile",profileImageRoute)
 
 app.listen(3000,()=>{console.log("port connected");})
