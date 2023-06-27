@@ -1,7 +1,5 @@
 const express = require("express")
-const collection = require("../models/jobSchema")
-const jobs=require("../models/formQuestion")
-const locs=require("../models/Location")
+const collection = require("../models/JobSchema")
 const app = express.Router()
 
 app.post("/", async (req, res) => {
@@ -11,8 +9,6 @@ app.post("/", async (req, res) => {
     res.json('checked');
     }
     catch (e) {
-        console.log(e)
-
         res.json("error")
     } 
 })

@@ -1,5 +1,5 @@
 const express = require("express")
-const collection = require("../models/userSchema")
+const collection = require("../models/UserSchema")
 const admincollection = require("../models/AdminSchema")
 const app = express.Router()
 const validator = require("validator")
@@ -11,7 +11,6 @@ app.post("/", async (req, res) => {
         email: email,
         phoneNo: phoneNo,
     }
-    console.log(adminCheck)
     const re_phone = /^[6-9]{1}[0-9]{9}$/;
     if (!validator.isEmail(email)) {
         res.json("Enter a valid email address.")
@@ -47,8 +46,6 @@ app.post("/", async (req, res) => {
             }
         }
         catch (e) {
-            console.log(e)
-
             res.json("error occured")
         }
     }

@@ -2,13 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../features/userSlice'
-
 const JobsDashboard = () => {
-
-
     const [jobData, setJobData] = useState([])
     const user = useSelector(selectUser);
-    // const [jobid,setJobid]=useState("default")
     const history=useNavigate();
     useEffect(() => {
         fetch(process.env.REACT_APP_BACKENDURL + "getjobdata?email=" + user.email, {
@@ -17,7 +13,6 @@ const JobsDashboard = () => {
             .then((res) => res.json())
             .then((data) => {
                 setJobData(data.data)
-                console.log("lol",jobData)
             })
     }, [])
 
@@ -53,12 +48,10 @@ const JobsDashboard = () => {
                                 }
                             } >View all applications</button>
                         </tr>
-
                     )
                 })}
             </table>
-        </div>
+        </div>  
     )
 }
-
 export default JobsDashboard

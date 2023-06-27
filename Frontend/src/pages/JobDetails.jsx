@@ -21,17 +21,11 @@ export const JobDetails = () => {
         jobType: yup.string().required().oneOf(['onsite', 'remote']),
         location: yup.string()
     });
-
-
-    
-
     const calllocapi = async () => {
         const res = await axios(process.env.REACT_APP_BACKENDURL+"getlocations", {
             method: "GET",
         })
         setLocationList(res.data.data)
-        console.log("avc", res.data)
-        console.log("checkeee", locationList)
     }
     const [locationList, setLocationList] = useState([]);
 
@@ -39,19 +33,29 @@ export const JobDetails = () => {
         calllocapi()
     }, [])
 
-
-    let skills = [
-        { Skill: 'Java' },
-        { Skill: 'C++' },
-        { Skill: 'Javascript' },
-        { Skill: 'DBMS' },
-        { Skill: 'HTML' },
-        { Skill: 'Css' },
-        { Skill: 'Python' },
-        { Skill: 'C#' },
-        { Skill: 'OOPS' },
-    ];
-    const [options] = useState(skills);
+    const [skills, setSkills] = useState([])
+    const callskillsapi = async () => {
+        const res = await axios(process.env.REACT_APP_BACKENDURL+"getskills", {
+            method: "GET",
+        })
+        setSkills(res.data.data)
+        console.log(res.data.data)
+    }
+    useEffect(() => {
+        callskillsapi()
+    }, [])
+    // let skills = [
+    //     { Skill: 'Java' },
+    //     { Skill: 'C++' },
+    //     { Skill: 'Javascript' },
+    //     { Skill: 'DBMS' },
+    //     { Skill: 'HTML' },
+    //     { Skill: 'Css' },
+    //     { Skill: 'Python' },
+    //     { Skill: 'C#' },
+    //     { Skill: 'OOPS' },
+    // ];
+    // const [options] = skills;
 
     const [formData, setformData] = useState({
         jobType: "",
@@ -86,20 +90,17 @@ export const JobDetails = () => {
 
     async function onSubmit(data) {
         data["formQuestions"] = questionList
-
         data["requiredSkillset"] = selectedskills
-
         data["location"] = selectedLocs
         try {
             await axios.post(process.env.REACT_APP_BACKENDURL+"jobdetails", { data })
                 .then(res => {
                     if (res.data === "checked") {
-                        history("/", { state: { id: data.title } })
+                        history("/jobsdashboard", { state: { id: data.title } })
                     }
                 })
                 .catch(e => {
                     alert("Wrong Details")
-                    console.log("errrr", e)
                 })
         }
         catch (e) {
@@ -123,19 +124,16 @@ export const JobDetails = () => {
     }
     const onSelectLoc = (selectedList, selectedItem) => {
         selectedLocs.push(selectedItem)
-
     }
 
     return (
-
         <div className='JobDetails'>
-
             <form className='form' onSubmit={handleSubmit(onSubmit)}>
                 <h3>Fill in the job details</h3>
                 <span className='heading'>Requried Skillsets</span>
                 <div>
                     <div className='DropDown'>
-                        <Multiselect className='input' options={options} displayValue='Skill' onSelect={onSelect} />
+                        <Multiselect className='input' options={skills} displayValue='Skill' onSelect={onSelect} />
                     </div>
                 </div>
                 <br />
@@ -160,22 +158,18 @@ export const JobDetails = () => {
                     onChange={handleChange}
                 />
                 <label> Onsite  </label>
-
                 <input className='input' type='radio' name='jobType' value='remote' {...register("jobType")}
                     onChange={handleChange}
                 />
                 <label> Remote  </label>
-
                 <br />
                 <br />
                 <span className='heading'>Location(s) : </span>
-
                 <div>
                     <div className='DropDown'>
                         <Multiselect className='input' options={locationList} displayValue='location' onSelect={onSelectLoc} />
                     </div>
                 </div>
-
                 <span className='heading' htmlFor='question'>Question(s)</span>
                 {questionList.map((singleQuestion, index) => (
                     <div key={index} className='questions'>
@@ -216,5 +210,4 @@ export const JobDetails = () => {
         </div>
     )
 }
-
 export default JobDetails

@@ -1,28 +1,17 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import "./CSS/Login.css"
 import { useDispatch } from 'react-redux';
 import { login } from '../features/userSlice';
-// import { logout } from '../features/userSlice';
-// import { SubmitLoginService } from '../services';
-function Login() {
 
+function Login() {
   const history = useNavigate();
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [adminCheck, setadminCheck] = useState(false)
 
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(logout());
-  //   try {
-  //     // history("/login")
-  //   }
-  //   catch (e) {
-  //     console.log("Error", e);
-  //   }
-  // })
   async function submit(e) {
     e.preventDefault();
     try {
@@ -54,18 +43,14 @@ function Login() {
         })
         .catch(e => {
           alert("Wrong Input")
-          console.log(e)
         })
     }
     catch (e) {
       console.log(e);
     }
   }
-
   return (
     <div className='login'>
-
-
       <form className='form' action="POST">
         <h1 className='heading1'>SKILL SPRINT</h1>
         <input className='input' type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder='Email' /><br />
@@ -77,10 +62,7 @@ function Login() {
         <Link className='link' to="/signup">Signup Page</Link><br /><br />
         <h1 className='ending'><b>We get what we d̶e̶s̶e̶r̶v̶e work for</b></h1>
       </form>
-
-
     </div>
   )
 }
-
 export default Login

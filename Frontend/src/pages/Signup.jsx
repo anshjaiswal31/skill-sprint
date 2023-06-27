@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import "./CSS/Signup.css"
-// import { SubmitSignupService } from '../services';
 function Signup() {
   const history = useNavigate()
   const [name, setName] = useState('')
@@ -12,14 +11,12 @@ function Signup() {
   const [adminCheck, setadminCheck] = useState(false)
   async function submit(e) {
     e.preventDefault();
-    let data = {
-      name: name,
-      email: email,
-      password: password,
-      phoneNo: phoneNo,
-      adminCheck: adminCheck
-    }
-    //   SubmitSignupService(data);
+    // let data = {
+    //   name: name,
+    //   email: email,
+    //   password: password,
+    //   phoneNo: phoneNo,
+    //   adminCheck: adminCheck
     // }
     try {
       await axios.post(process.env.REACT_APP_BACKENDURL + "signup", { name, email, password, phoneNo, adminCheck })
@@ -31,18 +28,14 @@ function Signup() {
         })
         .catch(e => {
           alert("Wrong Details", e)
-          console.log("errrr", e)
         })
     }
     catch (e) {
       console.log("Error", e);
     }
   }
-
     return (
       <div className='signup'>
-
-
         <form className='form' action="POST">
           <h1 className='heading1'>Welcome to Skill Sprint</h1>
           <input className='input' type="string" onChange={(e) => { setName(e.target.value) }} placeholder='Name' /><br />
@@ -61,5 +54,4 @@ function Signup() {
       </div>
     )
   }
-
   export default Signup

@@ -1,12 +1,9 @@
-
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import login from './features/userSlice'
 
 export const PasswordChangeService = async (data) => {
-
-
     const { currentPassword, password, confirmPassword, email, adminCheck } = data;
     try {
         if (currentPassword === password)
@@ -14,14 +11,12 @@ export const PasswordChangeService = async (data) => {
         else if (password !== confirmPassword)
             alert("The new passwords don't match")
         else {
-            console.log(process.env.REACT_APP_BACKENDURL)
             await axios.post(process.env.REACT_APP_BACKENDURL + "changepw", { email, currentPassword, password, adminCheck })
                 .then(res => {
                     alert(res.data)
                 })
                 .catch(e => {
                     alert("Wrong Details", e)
-                    console.log("errrr", e)
                 })
         }
     }
@@ -32,24 +27,18 @@ export const PasswordChangeService = async (data) => {
 
 
 export const UpdateDataService = async (data) => {
-    // let history = useNavigate()
     const { name, email, phoneNo, adminCheck } = data
     try {
         await axios.post(process.env.REACT_APP_BACKENDURL + "edit", { name, email, phoneNo, adminCheck })
             .then(res => {
-
                 if (res.data === "Updated")
-                    // history("/profile", { state: { id: email } });
                 return (res.data)
             })
             .catch(e => {
-                console.log("errrr", e)
                 return ("Wrong Details", e)
-                
             })
     }
     catch (e) {
-        console.log("Error", e);
         return ("Error", e)
     }
 };
@@ -86,8 +75,7 @@ export const SubmitLoginService = async (data) => {
                 }
             })
             .catch(e => {
-                alert("Wrong Input")
-                console.log(e)
+                alert("Wrong Input "+e)
             })
     }
     catch (e) {
@@ -98,7 +86,6 @@ export const SubmitLoginService = async (data) => {
 export const SubmitSignupService = async (data) => {
     let history = useNavigate()
     const {name,email, password,phoneNo, adminCheck } = data;
-
     try {
         await axios.post(process.env.REACT_APP_BACKENDURL + "signup", { name, email, password, phoneNo, adminCheck })
             .then(res => {
@@ -109,7 +96,6 @@ export const SubmitSignupService = async (data) => {
             })
             .catch(e => {
                 alert("Wrong Details", e)
-                console.log("errrr", e)
             })
     }
     catch (e) {

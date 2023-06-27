@@ -4,22 +4,18 @@ import { ReviewAppPopUp } from '../components/ReviewAppPopUp'
 
 const AllApplications = () => {
     const params = useParams();
-
     const jobID = params.jobid
     const history = useNavigate()
     const [jobApplicationsData, setJobApplicationsData] = useState([])
     const [answers, setAnswers] = useState([])
     const [applicationId, setApplicationId] = useState([])
     const [buttonPopup, setButtonPopup] = useState(false);
-    // const [ignore, forcedUpdate] = useReducer(x => x + 1, 0);
     useEffect(() => {
-        // console.log("here", jobID)
         fetch(process.env.REACT_APP_BACKENDURL + "getjobapps?jobid=" + jobID, {
             method: "GET",
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log("appsdata", data)
                 setJobApplicationsData(data.data)
             })
     }, [])
@@ -29,9 +25,6 @@ const AllApplications = () => {
         jobApplications[jobAppIndex].status = updatedStatus
         setJobApplicationsData(jobApplications)
     }
-    // const update = (jobId, updatedStatus)=>  {const jobApp = jobApplicationsData.find((job)=>job._id==jobId)
-    // jobApp.status=updatedStatus
-    // setJobApplicationsData(jobApp)
 return (
 
     <div>

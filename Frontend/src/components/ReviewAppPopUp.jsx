@@ -1,12 +1,9 @@
 import React, { useEffect,useReducer,useState } from 'react'
 import "./CSS/PopUp.css"
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import AllApplications from '../pages/AllApplications';
 
 export const ReviewAppPopUp = (props) => {
   const [appID]=useState(props.data[1])
-  // const [ignore, forcedUpdate] = useReducer(x=>x+1,0);
   useEffect(() => {
     axios.get(process.env.REACT_APP_BACKENDURL + "questions", {
       params: {
@@ -21,18 +18,15 @@ export const ReviewAppPopUp = (props) => {
   
   async function review(e) {
     let status=e;
-    console.log("status",status)
     try {
       await axios.post(process.env.REACT_APP_BACKENDURL + "review", {status,appID})
         .then(res => {
           
           props.setTrigger(false);
           alert(res.data);
-          // window.location.reload(true);
         })
         .catch(e => {
           alert("Wrong Details", e)
-          console.log("errrr", e)
         })
     }
     catch (e) {

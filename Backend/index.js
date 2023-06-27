@@ -19,7 +19,8 @@ const questionsRoute=require("./Controllers/getquestions")
 const reviewRoute=require("./Controllers/reviewapp")
 const profileUploadRoute=require("./Controllers/profileuploader")
 const profileImageRoute=require("./Controllers/getProfileImage")
-// const appStatusRoute=require("./Controllers/applicationstatusreq")
+const userDataRoute=require("./Controllers/userdata")
+const skillsRoute=require('./Controllers/skillsreq')
 
 mongoose.connect("mongodb://0.0.0.0:27017/job-portal-app")
 .then(()=>{
@@ -30,8 +31,7 @@ mongoose.connect("mongodb://0.0.0.0:27017/job-portal-app")
 })
 
 
-app.get("/",cors(),(req,res)=>{
-})
+app.get("/",cors(),(req,res)=>{})
 
 app.use("/signup",signUpRoute)
 
@@ -57,6 +57,10 @@ app.use("/review", reviewRoute)
 
 app.use("/uploadImage", profileUploadRoute)
 
-app.use("/getProfile",profileImageRoute)
+app.use("/getProfileImg",profileImageRoute)
+
+app.use("/getuserdata",userDataRoute);
+
+app.use('/getskills',skillsRoute);
 
 app.listen(3000,()=>{console.log("port connected");})

@@ -1,9 +1,8 @@
 const express = require("express")
-const collection = require("../models/userSchema")
+const collection = require("../models/UserSchema")
 const admincollection = require("../models/AdminSchema")
 const app = express.Router()
 const bcrypt = require('bcryptjs')
-const jwt = require("jsonwebtoken")
 const validator = require("validator")
 const crypto = require("crypto")
 
@@ -58,9 +57,7 @@ app.post("/", async (req, res) => {
             }
         }
         catch (e) {
-            console.log(e)
-
-            res.json("unknown error")
+            res.json("unknown error "+e)
         }
     }
 })

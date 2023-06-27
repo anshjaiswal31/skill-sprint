@@ -13,16 +13,19 @@ const Navbar = () => {
     const [img,setImg]=useState("");
     const [adminCheck] = useState(user.userType === 'admin' ? true : false)
     useEffect(() => {
-        
         try {
-            axios.get(process.env.REACT_APP_BACKENDURL + "getProfile",  {
+            axios.get(process.env.REACT_APP_BACKENDURL + "getProfileImg",  {
                 params: {
                   email:email,
                   adminCheck:adminCheck
                 }
               })
                 .then(function (response) {
-                  setImg( response.data.data.image)
+                    console.log(response.data.data.image)
+                    if(response.data.data.image==="NOTSET")
+                        setImg(process.env.REACT_APP_DEFAULTIMG)
+                    else
+                        setImg( response.data.data.image)
                 })
         }
         catch (e) {

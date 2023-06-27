@@ -1,5 +1,5 @@
 const express = require("express")
-const collection = require("../models/userSchema")
+const collection = require("../models/UserSchema")
 const admincollection = require("../models/AdminSchema")
 const app = express.Router()
 const bcrypt = require('bcryptjs')
@@ -23,7 +23,6 @@ async function passwordUpdate(db, currentPassword, data, email) {
 app.post("/", async (req, res) => {
     let { email, currentPassword, password, adminCheck } = req.body
     let hash = bcrypt.hashSync(password, 10);
-    console.log(hash);
     const data = {
         password: hash
     }
@@ -42,8 +41,6 @@ app.post("/", async (req, res) => {
         }
     }
     catch (e) {
-        console.log(e)
-
         res.json("unknown error")
     }
 })

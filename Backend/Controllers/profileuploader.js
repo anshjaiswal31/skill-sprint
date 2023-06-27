@@ -1,11 +1,7 @@
 const express = require("express")
-const collection = require("../models/userSchema")
+const collection = require("../models/UserSchema")
 const admincollection = require("../models/AdminSchema")
 const app = express.Router()
-// const bodyParser=require("body-parser")
-// app.use(bodyParser.urlencoded({extended: true,parameterLimit:100000, limit:"500mb"}))
-// app.use(bodyParser.json({limit:"500mb"}))
-
 
 app.post("/", async (req, res) => {
     let { email, image, adminCheck } = req.body

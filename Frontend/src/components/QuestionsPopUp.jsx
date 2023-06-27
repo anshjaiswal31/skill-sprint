@@ -12,7 +12,6 @@ export const QuestionsPopUp = (props) => {
   const [userEmail]=useState(user.email);
   async function submit(e) {
     e.preventDefault();
-    console.log("id here",jobid)
     try {
       await axios.post(process.env.REACT_APP_BACKENDURL + "jobs", { answers,jobid,userEmail })
         .then(res => {
@@ -30,7 +29,6 @@ export const QuestionsPopUp = (props) => {
         })
         .catch(e => {
           alert("Wrong Details", e)
-          console.log("errrr", e)
         })
     }
     catch (e) {
@@ -42,18 +40,14 @@ export const QuestionsPopUp = (props) => {
     const newValues = [...answers];
     newValues[index] = event.target.value;
     setanswers(newValues);
-    console.log(answers)
   };
 
-  console.log(props.data.length, "here")
   return (props.trigger) ? (
     <div className='popup'>
       <div className='popup-inner'>
         {props.children}
         <button onClick={() => props.setTrigger(false)} className="close-btn">x</button>
-        {/* {console.log("datraa", props.data)} */}
         {props.data[0].map((i, index) => {
-          
           return (
             <div>
               <span>{i.question}</span><br />

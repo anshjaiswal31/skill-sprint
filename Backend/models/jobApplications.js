@@ -3,9 +3,6 @@ const answerSchema = new mongoose.Schema({
     answer: {
         type:String
     },
-    // qid:{
-    //     type:String
-    // }
 })
 
 const jobApplicationSchema=new mongoose.Schema({
@@ -15,17 +12,12 @@ const jobApplicationSchema=new mongoose.Schema({
     },
     userEmail:{
         type:String,
-        // required:true
     },
     
     answers:{
         type:Array,
         required:true
     },
-    
-    
-    // [answerSchema],
-
     status:{
         type:String,
         default:'pending',
@@ -34,5 +26,4 @@ const jobApplicationSchema=new mongoose.Schema({
 })
 
 const JobApplication= mongoose.model('JOBAPPLICATION',jobApplicationSchema);
-
 module.exports= JobApplication;

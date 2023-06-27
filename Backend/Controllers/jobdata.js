@@ -1,12 +1,10 @@
 const express = require("express")
-const job = require("../models/jobSchema")
+const job = require("../models/JobSchema")
 const app = express.Router()
 
 app.get("/", async (req, res) => {
     try {
         let { email } = req.query;
-        
-        console.log("Email", email)
         const allJobs= await job.aggregate([
             {
                 $lookup: {
@@ -39,14 +37,11 @@ app.get("/", async (req, res) => {
                 }
             },
         ]).exec();
-        // const allJobs= await job.find({});
-        console.log(allJobs, "here")
+        console.log(allJobs)
         res.send({ status: "ok", data: allJobs })
     }
     catch (e) {
-        console.log(e)
         res.json("error")
     }
 })
-
 module.exports = app

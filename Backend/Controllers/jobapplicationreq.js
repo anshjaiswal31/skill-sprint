@@ -1,7 +1,5 @@
 const express = require("express")
-const collection = require("../models/jobApplications")
-const admin = require("../models/AdminSchema")
-const user=require("../models/userSchema")
+const collection = require("../models/JobApplications")
 const app = express.Router()
 function NoneEmpty(arr) {
     return arr.indexOf("") === -1;

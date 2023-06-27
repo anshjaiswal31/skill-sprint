@@ -11,7 +11,6 @@ const Jobs = () => {
   const [questions, setQuestions] = useState([])
   const [order, setOrder] = useState("ASC")
   const [jobid, setJobid] = useState("")
-
   const user = useSelector(selectUser);
   function locations(locationss) {
     let locs = ""
@@ -27,7 +26,6 @@ const Jobs = () => {
       .then((res) => res.json())
       .then((data) => {
         setJobData(data.data)
-        console.log(data.data, "jobData")
       })
   }, [])
 
@@ -71,7 +69,6 @@ const Jobs = () => {
               <td className="table-content">{reverseString(i.dueDate.substring(0, 10))}</td>
               <td className="table-content">{i.ctcLakhs} LPA</td>
               <td className="table-content">{i.jobType !== 'remote' ? locations(i.location) : 'remote'}</td>
-              {/* {setStatus(checkStatus(i._id, user.email))} */}
               {user && user.userType === "user" ?
                 i.application.status == "pending" ? <button onClick={
                   () => {

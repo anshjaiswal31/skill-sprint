@@ -12,11 +12,7 @@ const activitySchema=new mongoose.Schema({
     activityType:{
         type:String,
     },
-    
-
-    
 })
-
 const Activity= mongoose.model('ACTIVITY',activitySchema);
 
 module.exports= Activity;

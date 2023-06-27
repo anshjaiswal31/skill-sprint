@@ -1,10 +1,9 @@
 const express = require("express")
-const collection = require("../models/jobApplications")
+const collection = require("../models/JobApplications")
 const app = express.Router()
 
 app.post("/", async (req, res) => {
     let { status,appID } = req.body
-    console.log("checkkk", status, "hello", appID)
     try{
         if(status==1)
         await collection.updateOne({_id: appID}, {status: "accepted"});
@@ -13,7 +12,6 @@ app.post("/", async (req, res) => {
     res.json('updated');
     }
     catch (e) {
-        console.log(e)
         res.json("error")
     } 
 })
