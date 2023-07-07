@@ -29,14 +29,9 @@ export const PasswordChangeService = async (data) => {
 export const UpdateDataService = async (data) => {
     const { name, email, phoneNo, adminCheck } = data
     try {
-        await axios.post(process.env.REACT_APP_BACKENDURL + "edit", { name, email, phoneNo, adminCheck })
-            .then(res => {
-                if (res.data === "Updated")
-                return (res.data)
-            })
-            .catch(e => {
-                return ("Wrong Details", e)
-            })
+        const res= await axios.post(process.env.REACT_APP_BACKENDURL + "edit", { name, email, phoneNo, adminCheck })
+        console.log(res,"here")
+        return res.data    
     }
     catch (e) {
         return ("Error", e)

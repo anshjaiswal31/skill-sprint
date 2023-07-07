@@ -3,6 +3,9 @@ const collection = require("../models/UserSchema")
 const admincollection = require("../models/AdminSchema")
 const app = express.Router()
 const validator = require("validator")
+const logger = require('../logger')
+const infoLog = logger('info');
+const errorLog = logger('error');
 
 app.post("/", async (req, res) => {
     let { name, email, phoneNo,adminCheck} = req.body
@@ -26,6 +29,7 @@ app.post("/", async (req, res) => {
                 if (check) {
                     
                     await collection.updateOne({email:email}, data);
+                    infoLog("User "+email+" updated his profile")
                     res.json("Updated.")
                 }
                 else {
@@ -38,6 +42,7 @@ app.post("/", async (req, res) => {
 
                 if (check) {
                     await admincollection.updateOne({email:email}, data);
+                    infoLog("Admin "+email+" updated his profile")
                     res.json("Updated.")
                 }
                 else {
@@ -46,7 +51,8 @@ app.post("/", async (req, res) => {
             }
         }
         catch (e) {
-            res.json("error occured")
+            errorLog(e);
+            res.json("error occured "+e)
         }
     }
 })

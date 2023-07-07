@@ -1,0 +1,14 @@
+2023-07-05 15:53:32 [32minfo[39m: HELLO MY LOGGER FRND
+2023-07-05 15:53:32 [33mwarn[39m: HELLO MY LOGGER FRND
+2023-07-05 15:53:32 [31merror[39m: Error: HELLO MY LOGGER FRND
+    at C:\Users\ajaiswal\Documents\JOB PORTAL\skill-sprint\Backend\Controllers\loginreq.js:19:34
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2023-07-05 15:56:40 [32minfo[39m: anshu@gmail.com logged in successfully
+2023-07-05 15:58:49 [32minfo[39m: anshu@gmail.com entered wrong password
+2023-07-05 15:59:43 [32minfo[39m: User anshu@gmail.com logged in successfully
+2023-07-05 16:00:19 [32minfo[39m: Admin anshu@gmail.com logged in successfully
+2023-07-05 16:06:03 [32minfo[39m: anshu@gmail.com changed his password
+2023-07-05 16:06:49 [32minfo[39m: anshu@gmail.com changed his password
+2023-07-05 16:07:20 [32minfo[39m: anshu@gmail.com changed his password
+2023-07-05 16:07:37 [32minfo[39m: anshu@gmail.com changed his password
+2023-07-05 16:10:57 [32minfo[39m: Admin anshu@gmail.com updated his profile

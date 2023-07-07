@@ -5,6 +5,9 @@ const app = express.Router()
 const bcrypt = require('bcryptjs')
 const validator = require("validator")
 const crypto = require("crypto")
+const logger = require('../logger')
+const infoLog = logger('info');
+const errorLog = logger('error');
 
 app.post("/", async (req, res) => {
     let { name, email, password, phoneNo, adminCheck } = req.body
@@ -41,6 +44,7 @@ app.post("/", async (req, res) => {
                 }
                 else {
                     await collection.insertMany([data])
+                    infoLog("User "+email+" signed up")
                     res.json('user');
                 }
             }
@@ -52,11 +56,13 @@ app.post("/", async (req, res) => {
                 }
                 else {
                     await admincollection.insertMany([data])
+                    infoLog("Admin "+email+" signed up")
                     res.json('admin');
                 }
             }
         }
         catch (e) {
+            errorLog(e);
             res.json("unknown error "+e)
         }
     }

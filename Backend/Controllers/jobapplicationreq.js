@@ -1,6 +1,10 @@
 const express = require("express")
 const collection = require("../models/JobApplications")
 const app = express.Router()
+const logger = require('../logger')
+const infoLog = logger('info');
+const errorLog = logger('error');
+
 function NoneEmpty(arr) {
     return arr.indexOf("") === -1;
   }
@@ -17,7 +21,7 @@ app.post("/", async (req, res) =>
         if(NoneEmpty(answers))
         {
         await collection.insertMany([data])
-        console.log("answers done")
+        infoLog(userEmail+" job application "+jobid+" submitted succesfully")
         res.json('success')
         }
         else
@@ -26,7 +30,7 @@ app.post("/", async (req, res) =>
         }
     }
     catch (e) {
-        console.log(e)
+        errorLog(e);
         res.json("error") 
     }
 })

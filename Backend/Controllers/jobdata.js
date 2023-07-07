@@ -1,6 +1,8 @@
 const express = require("express")
 const job = require("../models/JobSchema")
 const app = express.Router()
+const logger = require('../logger')
+const errorLog = logger('error');
 
 app.get("/", async (req, res) => {
     try {
@@ -37,10 +39,11 @@ app.get("/", async (req, res) => {
                 }
             },
         ]).exec();
-        console.log(allJobs)
+        // console.log(allJobs)
         res.send({ status: "ok", data: allJobs })
     }
     catch (e) {
+        errorLog(e);
         res.json("error")
     }
 })

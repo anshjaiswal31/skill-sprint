@@ -3,12 +3,17 @@ const collection = require("../models/UserSchema")
 const admincollection = require("../models/AdminSchema")
 const app = express.Router()
 const bcrypt = require('bcryptjs')
+const logger = require('../logger')
+const infoLog = logger('info');
+const errorLog = logger('error');
+
 
 async function passwordUpdate(db, currentPassword, data, email) {
     const check = await db.findOne({ email: email })
     if (check) {
         if (bcrypt.compareSync(currentPassword, check.password)) {
             await db.updateOne({ email: email }, data);
+            infoLog(email+" changed his password")
             return "Your password has been changed successfully.";
         }
         else {
@@ -41,6 +46,7 @@ app.post("/", async (req, res) => {
         }
     }
     catch (e) {
+        errorLog(e);
         res.json("unknown error")
     }
 })

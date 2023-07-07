@@ -2,6 +2,8 @@ const express = require("express")
 const user = require("../models/UserSchema")
 const admin = require("../models/AdminSchema")
 const app = express.Router()
+const logger = require('../logger')
+const errorLog = logger('error');
 
 app.get("/", async (req, res) => {
     let { email,adminCheck} = req.query
@@ -18,6 +20,7 @@ app.get("/", async (req, res) => {
         res.send({status:"ok",data:{image:"NOTSET"}})
     }
     catch (e) {
+        errorLog(e);
         res.json("error")
     }
 })

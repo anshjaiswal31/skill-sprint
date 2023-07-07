@@ -1,0 +1,3 @@
+2023-07-05 15:53:32 [31merror[39m: Error: HELLO MY LOGGER FRND
+    at C:\Users\ajaiswal\Documents\JOB PORTAL\skill-sprint\Backend\Controllers\loginreq.js:19:34
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

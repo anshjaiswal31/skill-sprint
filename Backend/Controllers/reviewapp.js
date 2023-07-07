@@ -1,6 +1,8 @@
 const express = require("express")
 const collection = require("../models/JobApplications")
 const app = express.Router()
+const logger = require('../logger')
+const errorLog = logger('error');
 
 app.post("/", async (req, res) => {
     let { status,appID } = req.body
@@ -12,6 +14,7 @@ app.post("/", async (req, res) => {
     res.json('updated');
     }
     catch (e) {
+        errorLog(e);
         res.json("error")
     } 
 })

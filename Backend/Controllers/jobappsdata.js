@@ -1,6 +1,9 @@
 const express = require("express")
 const job = require("../models/JobApplications")
 const app = express.Router()
+const logger = require('../logger')
+const errorLog = logger('error');
+
 app.get("/", async (req, res) => {
     try{
         let {jobid}=req.query;
@@ -8,6 +11,7 @@ app.get("/", async (req, res) => {
         res.send({status:"ok",data:allJobs})
     }
     catch (e) {
+        errorLog(e)
         res.json("error")
     }
 })

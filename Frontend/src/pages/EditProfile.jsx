@@ -23,7 +23,6 @@ function EditProfile() {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
                 setName(data.data.name)
                 setPhoneNo(data.data.phoneNo)
             })
@@ -48,34 +47,35 @@ function EditProfile() {
 
     async function update(e) {
         e.preventDefault();
-        // let data={
-        //     name:name,
-        //     email:email,
-        //     phoneNo:phoneNo,
-        //     adminCheck:adminCheck    
-        // }
-        // let res=UpdateDataService(data)
-        // if(res==="Updated")
-        // {
-        //     history("/profile", { state: { id: email } });
+        let data={
+            name:name,
+            email:email,
+            phoneNo:phoneNo,
+            adminCheck:adminCheck    
+        }
+        let sol=await UpdateDataService(data)
+        if(sol==="Updated.")
+        {
+            history("/jobs", { state: { id: email } });
             
-        // }
-        // alert(res);
-        try {
-            await axios.post(process.env.REACT_APP_BACKENDURL+"edit", { name, email, phoneNo, adminCheck })
-                .then(res => {
+        }
+         alert(sol);
+        // console.log(res)
+        // try {
+        //     await axios.post(process.env.REACT_APP_BACKENDURL+"edit", { name, email, phoneNo, adminCheck })
+        //         .then(res => {
 
-                    if(res.data==="Updated")
-                        history("/profile", { state: { id: email } });
-                    alert(res.data);
-                })
-                .catch(e => {
-                    alert("Wrong Details", e)
-                })
-        }
-        catch (e) {
-            console.log("Error", e);
-        }
+        //             if(res.data==="Updated")
+        //                 history("/profile", { state: { id: email } });
+        //             alert(res.data);
+        //         })
+        //         .catch(e => {
+        //             alert("Wrong Details", e)
+        //         })
+        // }
+        // catch (e) {
+        //     console.log("Error", e);
+        // }
     }
 
     async function changepw(e) {
