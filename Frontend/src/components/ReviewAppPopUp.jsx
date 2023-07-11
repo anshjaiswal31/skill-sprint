@@ -1,37 +1,37 @@
 import React, { useEffect,useReducer,useState } from 'react'
 import "./CSS/PopUp.css"
-import axios from 'axios';
+// import axios from 'axios';
 
 export const ReviewAppPopUp = (props) => {
   const [appID]=useState(props.data[1])
-  useEffect(() => {
-    axios.get(process.env.REACT_APP_BACKENDURL + "questions", {
-      params: {
-        jobId: props.data[2]
-      }
-    })
-      .then(function (response) {
-        console.log("res", response);
-      })
-  }, [])
+  // useEffect(() => {
+  //   axios.get(process.env.REACT_APP_BACKENDURL + "questions", {
+  //     params: {
+  //       jobId: props.data[2]
+  //     }
+  //   })
+  //     .then(function (response) {
+  //       console.log("res", response);
+  //     })
+  // }, [])
 
   
   async function review(e) {
     let status=e;
-    try {
-      await axios.post(process.env.REACT_APP_BACKENDURL + "review", {status,appID})
-        .then(res => {
+    // try {
+    //   await axios.post(process.env.REACT_APP_BACKENDURL + "review", {status,appID})
+    //     .then(res => {
           
-          props.setTrigger(false);
-          alert(res.data);
-        })
-        .catch(e => {
-          alert("Wrong Details", e)
-        })
-    }
-    catch (e) {
-      console.log("Error", e);
-    }
+    //       props.setTrigger(false);
+    //       alert(res.data);
+    //     })
+    //     .catch(e => {
+    //       alert("Wrong Details", e)
+    //     })
+    // }
+    // catch (e) {
+    //   console.log("Error", e);
+    // }
     props.setUpdate(appID,status==1?"accepted":"rejected");
   }
 

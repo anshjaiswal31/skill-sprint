@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ReviewAppPopUp } from '../components/ReviewAppPopUp'
 
-const AllApplications = () => {
+export const AllApplications = () => {
     const params = useParams();
     const jobID = params.jobid
     const history = useNavigate()
@@ -31,7 +31,9 @@ return (
         {jobApplicationsData.map(i => {
             return (
                 <div>
+                    <div>Hello</div>
                     <br />
+                    
                     <span>Email ID: {i.userEmail}</span>
                     <br />
                     <span>Status: {i.status + " "}</span>
@@ -64,4 +66,3 @@ return (
 )
 }
 
-export default AllApplications
